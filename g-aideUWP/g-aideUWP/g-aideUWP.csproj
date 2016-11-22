@@ -95,13 +95,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ConnectionPage.xaml.cs">
+    <Compile Include="Model\CategoryService.cs" />
+    <Compile Include="Model\Service.cs" />
+    <Compile Include="View\ConnectionPage.xaml.cs">
       <DependentUpon>ConnectionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EditCategory.xaml.cs">
+    <Compile Include="View\EditCategory.xaml.cs">
       <DependentUpon>EditCategory.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ListService.xaml.cs">
+    <Compile Include="View\ListService.xaml.cs">
       <DependentUpon>ListService.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -128,15 +130,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="ConnectionPage.xaml">
+    <Page Include="View\ConnectionPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="EditCategory.xaml">
+    <Page Include="View\EditCategory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ListService.xaml">
+    <Page Include="View\ListService.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
