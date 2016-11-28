@@ -5,7 +5,8 @@
     xmlns:local="using:g_aideUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    DataContext="{Binding Source={StaticResource Locator}, Path= ListServ}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid Background="#FFE3CFB1">
@@ -16,14 +17,19 @@
             </Grid.RowDefinitions>
 
             <ComboBox Grid.Row="0" Name="category" HorizontalAlignment="Center" Margin="10,10,10,0" Width="340">
-                <ComboBoxItem>item 1</ComboBoxItem>
-                <ComboBoxItem>item 2</ComboBoxItem>
+                
             </ComboBox>
 
-            <ListBox Grid.Row="1" Margin="10"></ListBox>
+            <ListView Grid.Row="1" Margin="10" ItemsSource="{Binding Services, Mode=TwoWay}" SelectedItem="{Binding SelectService, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBox Text="{Binding NameService}"></TextBox>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
-            <Button x:Name="button" Content="Modifier catégorie" HorizontalAlignment="Left" Margin="36,0,0,3" Grid.Row="2" VerticalAlignment="Center" Background="#FF750023"/>
-            <Button x:Name="button1" Content="Suppression" HorizontalAlignment="Left" Margin="222,0,0,3" Grid.Row="2" VerticalAlignment="Center" Background="#FF750023"/>
+            <Button x:Name="EditCategory" Command="{Binding EditCategoryCommand}" Content="Modifier catégorie" HorizontalAlignment="Left" Margin="36,0,0,3" Grid.Row="2" VerticalAlignment="Center" Background="#FF750023" />
+            <Button x:Name="Suppression" Content="Supprimer" HorizontalAlignment="Left" Margin="222,0,0,3" Grid.Row="2" VerticalAlignment="Center" Background="#FF750023"/>
 
         </Grid>
 

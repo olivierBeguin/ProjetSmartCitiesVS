@@ -1,4 +1,5 @@
-﻿using System;
+﻿using g_aideUWP.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,16 @@ namespace g_aideUWP
         public EditCategory()
         {
             this.InitializeComponent();
+        }
+
+         protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ((EditCategoryModel)DataContext).OnNavigateTo(e);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
         }
     }
 }

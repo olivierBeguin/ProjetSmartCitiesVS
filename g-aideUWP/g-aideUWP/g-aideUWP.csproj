@@ -95,8 +95,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\AllService.cs" />
     <Compile Include="Model\CategoryService.cs" />
     <Compile Include="Model\Service.cs" />
+    <Compile Include="ViewModel\ConnectionPageModel.cs" />
+    <Compile Include="ViewModel\EditCategoryModel.cs" />
+    <Compile Include="ViewModel\ListServiceModel.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\ConnectionPage.xaml.cs">
       <DependentUpon>ConnectionPage.xaml</DependentUpon>
     </Compile>
@@ -143,6 +148,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

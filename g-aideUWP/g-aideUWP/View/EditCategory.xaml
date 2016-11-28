@@ -5,7 +5,7 @@
     xmlns:local="using:g_aideUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Background="#FFE3CFB1">
+    mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid Background="#FFE3CFB1">
@@ -16,12 +16,11 @@
                 <RowDefinition Height="50"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" TextAlignment="Center" Margin="5">nom du service</TextBlock>
-            <TextBox Grid.Row="1" Name="description" Margin="10"></TextBox>
+            <TextBlock Text="{Binding SelectedService.NameService}" Grid.Row="0" TextAlignment="Center" Margin="5"></TextBlock>
+            <TextBox Grid.Row="1" Text="{Binding SelectedService.descriptionService}" Margin="10"></TextBox>
             
             <ComboBox Grid.Row="2" Name="category" HorizontalAlignment="Center" Margin="10,10,10,0" Width="340">
-                <ComboBoxItem>item 1</ComboBoxItem>
-                <ComboBoxItem>item 2</ComboBoxItem>
+                
             </ComboBox>
             <Button x:Name="Edit" Content="Modifier" HorizontalAlignment="Center" Margin="5" Grid.Row="3" VerticalAlignment="Center" Background="#FF750023"/>
         </Grid>
