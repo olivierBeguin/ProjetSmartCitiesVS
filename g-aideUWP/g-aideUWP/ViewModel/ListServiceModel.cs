@@ -27,14 +27,14 @@ namespace g_aideUWP.ViewModel
             set
             {
                 _services = value;
-                RaisePropertyChanged("Students");
+                RaisePropertyChanged("Services");
             }
         }
 
         public ListServiceModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            Services = new ObservableCollection<Service>(AllService.GetAllStudents());
+           Services = new ObservableCollection<Service>(AllService.GetAllStudents());
         }
 
         public Service SelectedService

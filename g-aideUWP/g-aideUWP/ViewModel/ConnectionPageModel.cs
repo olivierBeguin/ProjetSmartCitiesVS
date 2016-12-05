@@ -1,4 +1,6 @@
-﻿using GalaSoft.MvvmLight;
+﻿using g_aideUWP.DAO;
+using g_aideUWP.Model;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using System;
@@ -6,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -16,6 +19,7 @@ namespace g_aideUWP.ViewModel
     {
         private INavigationService _navigationService;
         private ICommand _connexionAppCommand;
+        private UserConnection uc= new UserConnection();
 
         public ConnectionPageModel(INavigationService navigationService)
         {
@@ -37,7 +41,8 @@ namespace g_aideUWP.ViewModel
 
         private void ConnexionApp()
         {
-                _navigationService.NavigateTo("ListService");
+            uc.GetToken();
+            _navigationService.NavigateTo("ListService");
         }
 
     }

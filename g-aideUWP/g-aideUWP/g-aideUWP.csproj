@@ -95,9 +95,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DAO\UserConnection.cs" />
     <Compile Include="Model\AllService.cs" />
     <Compile Include="Model\CategoryService.cs" />
     <Compile Include="Model\Service.cs" />
+    <Compile Include="Model\UserApp.cs" />
     <Compile Include="ViewModel\ConnectionPageModel.cs" />
     <Compile Include="ViewModel\EditCategoryModel.cs" />
     <Compile Include="ViewModel\ListServiceModel.cs" />
@@ -120,7 +122,13 @@
     <None Include="g-aideUWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="image\logo.png" />
+    <Content Include="image\logo.scale-100.png" />
+    <Content Include="image\logo.scale-125.png" />
+    <Content Include="image\logo.scale-150.png" />
+    <Content Include="image\logo.scale-200.png" />
+    <Content Include="image\logo.scale-400.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -148,7 +156,11 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Business\" />
+    <Folder Include="Controller\" />
+    <Folder Include="DataAccess\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
