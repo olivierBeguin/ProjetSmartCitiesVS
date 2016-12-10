@@ -1,16 +1,8 @@
-﻿using g_aideUWP.DAO;
-using g_aideUWP.Model;
+﻿using g_aideUWP.DAO;// a changer pour la decoupe en couche !!!
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace g_aideUWP.ViewModel
@@ -26,7 +18,6 @@ namespace g_aideUWP.ViewModel
             _navigationService = navigationService;
         }
 
-
         public ICommand ConnexionAppCommand
         {
             get
@@ -39,11 +30,10 @@ namespace g_aideUWP.ViewModel
             }
         }
 
-        private void ConnexionApp()
+        private async void ConnexionApp()
         {
-            uc.GetToken();
+            string tokenAccess = await uc.GetToken();  // a mettre autre part
             _navigationService.NavigateTo("ListService");
         }
-
     }
 }

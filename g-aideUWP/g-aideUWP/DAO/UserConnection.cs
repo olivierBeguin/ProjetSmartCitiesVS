@@ -1,11 +1,6 @@
-﻿using g_aideUWP.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 
@@ -14,7 +9,7 @@ namespace g_aideUWP.DAO
 {
     class UserConnection
     {
-        public async void GetToken()
+        public async Task<string> GetToken()
         {
             string values = "Username=admin&Password=admin12&grant_type=password";
             //var content = new FormUrlEncodedContent(values);
@@ -27,7 +22,19 @@ namespace g_aideUWP.DAO
             token.EnsureSuccessStatusCode();
             string responseBody = await token.Content.ReadAsStringAsync();
 
+            string trueToken = jsonToToken(responseBody);
+
+            return trueToken;
+
+
         }
 
+        private String jsonToToken(String responseBody) //throws Exception
+        {
+            String token = responseBody.Remove(0, 17);
+            token = token.Remove(token.Length - 2);
+        return token;
     }
+
+}
 }
