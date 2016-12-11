@@ -95,9 +95,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DAO\ServicesDAO.cs" />
     <Compile Include="DAO\UserConnection.cs" />
     <Compile Include="Model\AllService.cs" />
     <Compile Include="Model\CategoryService.cs" />
+    <Compile Include="Model\Comment.cs" />
+    <Compile Include="Model\DoService.cs" />
     <Compile Include="Model\Service.cs" />
     <Compile Include="Model\UserApp.cs" />
     <Compile Include="ViewModel\ConnectionPageModel.cs" />

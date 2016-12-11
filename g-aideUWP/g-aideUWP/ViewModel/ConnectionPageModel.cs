@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using System.Collections;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -11,7 +12,8 @@ namespace g_aideUWP.ViewModel
     {
         private INavigationService _navigationService;
         private ICommand _connexionAppCommand;
-        private UserConnection uc= new UserConnection();
+        private UserConnection uc= new UserConnection();// a voir si c est ici comme ca
+        private ServicesDAO augu = new ServicesDAO();//same
 
         public ConnectionPageModel(INavigationService navigationService)
         {
@@ -33,6 +35,7 @@ namespace g_aideUWP.ViewModel
         private async void ConnexionApp()
         {
             string tokenAccess = await uc.GetToken();  // a mettre autre part
+            IEnumerable coucou = await augu.GetServices(tokenAccess);   //same
             _navigationService.NavigateTo("ListService");
         }
     }
