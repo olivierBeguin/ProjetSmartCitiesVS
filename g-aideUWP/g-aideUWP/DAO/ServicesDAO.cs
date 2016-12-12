@@ -61,7 +61,7 @@ namespace g_aideUWP.DAO
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenAccess);
-            var result = await client.PutAsync(new Uri("http://g-aideappweb.azurewebsites.net/api/services/"), byteContent);
+            var result = await client.PutAsync(new Uri("http://g-aideappweb.azurewebsites.net/api/services/"+1), byteContent);
 
             result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
