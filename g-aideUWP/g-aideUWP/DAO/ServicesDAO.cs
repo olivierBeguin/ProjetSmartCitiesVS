@@ -49,6 +49,7 @@ namespace g_aideUWP.DAO
             result.EnsureSuccessStatusCode();
         }
 
+
         public async void EditService(Service serviceEdit, string tokenAccess)// fini , pas tester mais normalement OK il faut le mettre en place lorsqu on appuie sur le bouton
         {
             long id = serviceEdit.Id;
