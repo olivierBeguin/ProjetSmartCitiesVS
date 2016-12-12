@@ -14,6 +14,7 @@ namespace g_aideUWP.ViewModel
         private ICommand _connexionAppCommand;
         private UserConnection uc= new UserConnection();// a voir si c est ici comme ca
         private ServicesDAO augu = new ServicesDAO();//same
+        
 
         public ConnectionPageModel(INavigationService navigationService)
         {
