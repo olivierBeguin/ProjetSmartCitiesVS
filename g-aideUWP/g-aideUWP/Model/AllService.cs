@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace g_aideUWP.Model
 {
-    class AllService
+    public class AllService
     {
-        public static IEnumerable<Service> Services { get; set; }
+        public IEnumerable<Service> AllServices { get; set; }
 
-        public static IEnumerable<Service> GetAllStudents()
-        {
-            return Services = new List<Service>();
-        }
+        //public static IEnumerable<Service> GetAllServices()
+        //{
+        //    return AllServices = new List<Service>();
+        //}
     }
 }

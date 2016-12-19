@@ -95,8 +95,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DAO\ServicesDAO.cs" />
-    <Compile Include="DAO\UserConnection.cs" />
+    <Compile Include="DataAccess\ServicesDAO.cs" />
+    <Compile Include="DataAccess\UserConnection.cs" />
     <Compile Include="Model\AllService.cs" />
     <Compile Include="Model\CategoryService.cs" />
     <Compile Include="Model\Comment.cs" />
@@ -160,9 +160,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Business\" />
-    <Folder Include="Controller\" />
-    <Folder Include="DataAccess\" />
+    <Folder Include="Converter\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

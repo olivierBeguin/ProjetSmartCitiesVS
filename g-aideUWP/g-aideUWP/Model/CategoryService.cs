@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace g_aideUWP.Model
 {
-    class CategoryService
+    public class CategoryService
     {
         public long Id { get; set; }
         public string Label { get; set; }

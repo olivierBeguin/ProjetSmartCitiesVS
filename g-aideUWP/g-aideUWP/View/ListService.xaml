@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    DataContext="{Binding Source={StaticResource Locator}, Path= ListServ}">
+    DataContext="{Binding Source={StaticResource Locator}, Path= listService}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid Background="#FFE3CFB1">
@@ -20,16 +20,11 @@
                 
             </ComboBox>
 
-            <ListView Grid.Row="1" Margin="10" ItemsSource="{Binding Services, Mode=TwoWay}" SelectedItem="{Binding SelectService, Mode=TwoWay}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBox Text="{Binding NameService}"></TextBox>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+            <ListView Grid.Row="1" Margin="10" ItemsSource="{Binding Services, Mode=TwoWay}" ItemTemplate="{StaticResource ServiceTemplate}" SelectedItem="{Binding SelectedService, Mode=TwoWay}">
             </ListView>
 
-            <Button x:Name="EditCategory" Command="{Binding EditCategoryCommand}" Content="Modifier catégorie" HorizontalAlignment="Left" Margin="36,0,0,3" Grid.Row="2" VerticalAlignment="Center" Background="#FF750023" />
-            <Button x:Name="Suppression" Content="Supprimer" HorizontalAlignment="Left" Margin="222,0,0,3" Grid.Row="2" VerticalAlignment="Center" Background="#FF750023"/>
+            <Button x:Name="EditCategory" Command="{Binding EditCommand}" Content="Modifier catégorie" HorizontalAlignment="Left" Margin="36,0,0,3" Grid.Row="2" VerticalAlignment="Center" Background="#FF750023" />
+            <Button x:Name="Suppression" Command="{Binding RemoveCommand}" Content="Supprimer" HorizontalAlignment="Left" Margin="222,0,0,3" Grid.Row="2" VerticalAlignment="Center" Background="#FF750023"/>
 
         </Grid>
 

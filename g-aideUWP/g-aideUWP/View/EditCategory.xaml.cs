@@ -28,7 +28,7 @@ namespace g_aideUWP
             this.InitializeComponent();
         }
 
-         protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ((EditCategoryModel)DataContext).OnNavigateTo(e);
         }

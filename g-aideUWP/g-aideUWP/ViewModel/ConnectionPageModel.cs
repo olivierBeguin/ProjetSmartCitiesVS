@@ -1,9 +1,12 @@
 ﻿using g_aideUWP.DAO;// a changer pour la decoupe en couche !!!
+using g_aideUWP.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace g_aideUWP.ViewModel
@@ -12,9 +15,10 @@ namespace g_aideUWP.ViewModel
     {
         private INavigationService _navigationService;
         private ICommand _connexionAppCommand;
+
         private UserConnection uc= new UserConnection();// a voir si c est ici comme ca
-        private ServicesDAO augu = new ServicesDAO();//same
-        
+        private ServicesDAO services = new ServicesDAO();//same
+        private ListServiceModel lsm;        
 
         public ConnectionPageModel(INavigationService navigationService)
         {
@@ -33,11 +37,11 @@ namespace g_aideUWP.ViewModel
             }
         }
 
-        private async void ConnexionApp()
+        private void ConnexionApp()
         {
-            string tokenAccess = await uc.GetToken();  // a mettre autre part
-            IEnumerable coucou = await augu.GetServices(tokenAccess);   //same
             _navigationService.NavigateTo("ListService");
         }
+
+
     }
 }

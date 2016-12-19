@@ -30,11 +30,19 @@ namespace g_aideUWP.ViewModel
             }
         }
 
-        public ListServiceModel listServ
+        public ListServiceModel listService
         {
             get
             {
                 return ServiceLocator.Current.GetInstance<ListServiceModel>();
+            }
+        }
+
+        public EditCategoryModel editCategory
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<EditCategoryModel>();
             }
         }
     }
