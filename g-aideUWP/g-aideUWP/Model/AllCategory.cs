@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace g_aideUWP.Model
 {
-    class UserApp
+    class AllCategory
     {
-        public string UserName{ get; set; }
-        public string Password { get; set; }
+        public IEnumerable<CategoryService> AllCategoryService { get; set; }
     }
 }

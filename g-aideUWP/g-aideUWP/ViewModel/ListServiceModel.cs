@@ -14,14 +14,15 @@ namespace g_aideUWP.ViewModel
     public class ListServiceModel : ViewModelBase, INotifyPropertyChanged
     {
         private ObservableCollection<Service> _services = null;
+        private ObservableCollection<CategoryService> _category = null;
         private INavigationService _navigationService;
         private Service _selectedService;
         private ICommand _listService;
         private ICommand _EditCommand;
 
         IEnumerable<Service> allServices;
-        private UserConnection uc = new UserConnection();// a voir si c est ici comme ca
-        private ServicesDAO services = new ServicesDAO();//same
+        private UserConnection uc = new UserConnection();// a voir si c est ici comme ca faut garder le token en memoire et le demander qu une seule fois
+        private ServicesDAO services = new ServicesDAO();
 
         public ObservableCollection<Service> Services
         {
@@ -37,13 +38,39 @@ namespace g_aideUWP.ViewModel
             }
         }
 
+        public ObservableCollection<CategoryService> ListCategory
+        {
+            get { return _category; }
+            set
+            {
+                if (_category == value)
+                {
+                    return;
+                }
+                _category = value;
+                RaisePropertyChanged("Category");
+            }
+        }
+
+
+
         public ListServiceModel(INavigationService navigationService)
         {
-            //GetAllServices();
             _navigationService = navigationService;
 
             if (IsInDesignMode)
             {
+                var allCategory = new AllCategory();
+                var category = new List<CategoryService>();
+
+                foreach(CategoryService categoryService in category)
+                {
+                    category.Add(new CategoryService());
+                }
+                allCategory.AllCategoryService = category;
+                ListCategory = new ObservableCollection<CategoryService>(category);
+
+
                 var allServices = new AllService();
                 var services = new List<Service>();
 
@@ -63,16 +90,11 @@ namespace g_aideUWP.ViewModel
 
         public async Task InitializeAsync()
         {
-            var service = new ServicesDAO();
             string tokenAccess = await uc.GetToken();  // a mettre autre part et a retenir le token dans l app, vault ?
-            var allServices = await service.GetServices(tokenAccess);
+            var category = await services.GetCategory(tokenAccess);
+            var allServices = await services.GetServices(tokenAccess);
+            ListCategory = new ObservableCollection<CategoryService>(category);
             Services = new ObservableCollection<Service>(allServices);
-        }
-
-        public async void GetAllServices()
-        {
-            string tokenAccess = await uc.GetToken();  // a mettre autre part et a retenir le token dans l app, vault ?
-            allServices = await services.GetServices(tokenAccess);
         }
 
         public Service SelectedService

@@ -9,10 +9,5 @@ namespace g_aideUWP.Model
     public class AllService
     {
         public IEnumerable<Service> AllServices { get; set; }
-
-        //public static IEnumerable<Service> GetAllServices()
-        //{
-        //    return AllServices = new List<Service>();
-        //}
     }
 }

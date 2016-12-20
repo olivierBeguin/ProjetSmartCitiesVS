@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    DataContext="{Binding Source={StaticResource Locator}, Path= EditCategory}">
+    DataContext="{Binding Source={StaticResource Locator}, Path= editCategory}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid Background="#FFE3CFB1">
@@ -17,8 +17,8 @@
                 <RowDefinition Height="50"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="{Binding SelectedService.NameService}" Grid.Row="0" TextAlignment="Center" Margin="5"></TextBlock>
-            <TextBox Grid.Row="1" Text="{Binding SelectedService.descriptionService}" Margin="10"></TextBox>
+            <TextBlock Text="{Binding SelectedService.NameService}" FontSize="20" Grid.Row="0" TextAlignment="Center" Margin="5"></TextBlock>
+            <TextBox Grid.Row="1" Text="{Binding SelectedService.DescriptionService}" IsReadOnly="True" FontSize="18" Margin="10"></TextBox>
             
             <ComboBox Grid.Row="2" Name="category" HorizontalAlignment="Center" Margin="10,10,10,0" Width="340">
                 

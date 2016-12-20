@@ -1,12 +1,6 @@
 ﻿using g_aideUWP.Model;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace g_aideUWP.ViewModel
@@ -23,7 +17,7 @@ namespace g_aideUWP.ViewModel
             _navigationService = navigationService;
         }
 
-        public void OnNavigateTo(NavigationEventArgs e)
+        public void OnNavigatedTo(NavigationEventArgs e)
         {
             SelectedService = (Service)e.Parameter;
         }

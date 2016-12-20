@@ -1,6 +1,4 @@
-﻿// toute methode pour acceder a l api sont dans la ncouche model
-
-using g_aideUWP.Model;
+﻿using g_aideUWP.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -15,7 +13,7 @@ namespace g_aideUWP.DAO
 {
     class ServicesDAO
     {
-        public async Task<IEnumerable<Service>> GetServices(string tokenAccess)//fonctionne mais pas encore afficher dans l app
+        public async Task<IEnumerable<Service>> GetServices(string tokenAccess)
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenAccess);
@@ -41,7 +39,7 @@ namespace g_aideUWP.DAO
 
         }
 
-        public async void RemoveService(Service deleteService, string tokenAccess)// fonctionne mais pas encore fonctionnel lors de l appuie sur le bouton
+        public async void RemoveService(Service deleteService, string tokenAccess)
         {
             var client = new HttpClient();
             long id = deleteService.Id;
@@ -70,24 +68,24 @@ namespace g_aideUWP.DAO
             result.EnsureSuccessStatusCode();
         }
 
-        //public async Task<IEnumerable<CategoryService> getCategory(string tokenAccess)
-        //{
-        //    var client = new HttpClient();
-        //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenAccess);
-        //    var service = await client.GetStringAsync("");
-        //    service = @"{ ""data"" : " + service + "}";
+        public async Task<IEnumerable<CategoryService>> GetCategory(string tokenAccess)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenAccess);
+            var getCategory = await client.GetStringAsync("http://g-aideappweb.azurewebsites.net/api/CategoryServices");
+            getCategory = @"{ ""data"" : " + getCategory + "}";
 
-        //    var rawService = JObject.Parse(service);
+            var rawCategory = JObject.Parse(getCategory);
 
-        //    var services = rawService["data"].Children().Select(d => new Service()
-        //    {  
-        //            Id = d["Category"]["Id"].Value<long>(),
-        //            Label = d["Category"]["Label"].Value<string>()
-        //    });
+            var category = rawCategory["data"].Children().Select(d => new CategoryService()
+            {
+                Id = d["Id"].Value<long>(),
+                Label = d["Label"].Value<string>()
+            });
 
-        //    return services;
+            return category;
 
-        //}
-    }
+            }
+        }
 
     }
