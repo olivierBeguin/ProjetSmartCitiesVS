@@ -15,11 +15,11 @@ namespace g_aideUWP.ViewModel
         private INavigationService _navigationService;
         
         private UserConnection uc = new UserConnection();// a voir si c est ici comme ca faut garder le token en memoire et le demander qu une seule fois 
-        //private IDialogService dialogService;    
+        private IDialogService dialogService;    
 
-        public ConnectionPageModel(INavigationService navigationService)
+        public ConnectionPageModel(INavigationService navigationService, IDialogService dialogService)
         {
-            //this.dialogService = dialogService;
+            this.dialogService = dialogService;
             _navigationService = navigationService;
         }
 
@@ -41,11 +41,20 @@ namespace g_aideUWP.ViewModel
             try
             {
                 string tokenAccess = await uc.GetToken2();  // a mettre autre part et a retenir le token dans l app, vault ?
-                _navigationService.NavigateTo("ListService");
+                //if (string.Equals(UserName,"admin")) // a mettre si on veut qu'il n'y ai que l'admin qui ait acces a cette application. et +1 exception du coup.
+                //{
+                    _navigationService.NavigateTo("ListService");
+                //}
             }
-            catch(DataNotAvailableException e) // catch a faire !!!
+            catch(ConnectionException e)
             {
+                await dialogService.ShowMessage(e.GetMessage(),
+                        "Erreur",
+                        buttonConfirmText: "OK", buttonCancelText: "Annuler",
+                        afterHideCallback: (confirmed) =>
+                            {
 
+                            });
             }
         }
 

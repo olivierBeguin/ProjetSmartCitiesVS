@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 
@@ -56,7 +57,7 @@ namespace g_aideUWP.DAO
                 string trueToken = data["access_token"].Value<string>();
                 return trueToken;
             }
-            catch (IOException)
+            catch (HttpRequestException)
             {
                 throw new ConnectionException(false);
             }

@@ -16,8 +16,7 @@
                 <RowDefinition Height="50"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <ComboBox x:Name="CategoryComboBox" ItemsSource="{Binding ListCategory, Mode=TwoWay}" Grid.Row="0" HorizontalAlignment="Center" Margin="10,10,10,0" Width="340">
-            </ComboBox>
+            <ComboBox x:Name="CategoryComboBox" ItemsSource="{Binding ListCategory, Mode=TwoWay}" Grid.Row="0" HorizontalAlignment="Center" Margin="10,10,10,0" Width="340"></ComboBox>
 
             <ListView Grid.Row="1" Margin="10" ItemsSource="{Binding Services, Mode=TwoWay}" ItemTemplate="{StaticResource ServiceTemplate}" SelectedItem="{Binding SelectedService, Mode=TwoWay}">
             </ListView>

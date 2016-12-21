@@ -48,40 +48,42 @@ namespace g_aideUWP.ViewModel
         }
 
 
-        //private IDialogService dialogService; // a retirer aussi du viewmodellocator si je supprime
+        private IDialogService dialogService;
 
         private INavigationService _navigationService;
         public ListServiceModel(INavigationService navigationService, IDialogService dialogService)
         {
+            InitializeAsync();
+            this.dialogService = dialogService;
             _navigationService = navigationService;
-            //this.dialogService = dialogService;
+            
 
-            if (IsInDesignMode)
-            {
-                var allCategory = new AllCategory();
-                var category = new List<CategoryService>();
+            //if (IsInDesignMode)
+            //{
+            //    var allCategory = new AllCategory();
+            //    var category = new List<CategoryService>();
 
-                foreach(CategoryService categoryService in category)
-                {
-                    category.Add(new CategoryService());
-                }
-                allCategory.AllCategoryService = category;
-                ListCategory = new ObservableCollection<CategoryService>(category);
+            //    foreach(CategoryService categoryService in category)
+            //    {
+            //        category.Add(new CategoryService());
+            //    }
+            //    allCategory.AllCategoryService = category;
+            //    ListCategory = new ObservableCollection<CategoryService>(category);
 
-                var allServices = new AllService();
-                var services = new List<Service>();
+            //    var allServices = new AllService();
+            //    var services = new List<Service>();
 
-                foreach (Service service in services)
-                {
-                    services.Add(new Service());
-                }
-                allServices.AllServices = services;
-                Services = new ObservableCollection<Service>(services);
-            }
-            else
-            {
-                InitializeAsync();
-            }
+            //    foreach (Service service in services)
+            //    {
+            //        services.Add(new Service());
+            //    }
+            //    allServices.AllServices = services;
+            //    Services = new ObservableCollection<Service>(services);
+            //}
+            //else
+            //{
+                
+            //}
 
         }
 
@@ -98,9 +100,15 @@ namespace g_aideUWP.ViewModel
                 ListCategory = new ObservableCollection<CategoryService>(category);
                 Services = new ObservableCollection<Service>(allServices);
             }
-            catch(DataNotAvailableException e) // a faire le catch !!
+            catch(DataNotAvailableException e)
             {
-                
+                await dialogService.ShowMessage(e.GetMessage(),
+                        "Erreur",
+                        buttonConfirmText: "OK", buttonCancelText: "Annuler",
+                        afterHideCallback: (confirmed) =>
+                        {
+
+                        });
             }
         }
 
@@ -168,10 +176,27 @@ namespace g_aideUWP.ViewModel
                     string tokenAccess = await uc.GetToken2();  // a mettre autre part et a retenir le token dans l app, vault ? et remttre gettoken
                     services.RemoveService(SelectedService, tokenAccess);
                     await InitializeAsync();
+                    
                 }
-                catch(DataUpdateException e)// catch a faire !!!
+                catch(DataUpdateException e)
                 {
+                    await dialogService.ShowMessage(e.GetMessage(),
+                            "Erreur",
+                            buttonConfirmText: "OK", buttonCancelText: "Annuler",
+                            afterHideCallback: (confirmed) =>
+                                {
 
+                                });
+                }
+                catch (DataNotAvailableException e)
+                {
+                    await dialogService.ShowMessage(e.GetMessage(),
+                            "Erreur",
+                            buttonConfirmText: "OK", buttonCancelText: "Annuler",
+                            afterHideCallback: (confirmed) =>
+                            {
+
+                            });
                 }
             }
         }
