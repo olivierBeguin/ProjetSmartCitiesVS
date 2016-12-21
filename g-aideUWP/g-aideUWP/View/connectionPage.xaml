@@ -25,11 +25,11 @@
             <Image Grid.Row ="1" Source="/image/logo.png"/>
             <TextBlock TextAlignment="Center" Grid.Row="2" Text="G-aide" Margin="5"></TextBlock>
             <TextBlock Text="identifiant" Grid.Row="3" TextAlignment="Center" Margin="10"></TextBlock>
-            <TextBox Grid.Row="4"></TextBox>
-            <!--<TextBox Grid.Row="4" Text="{Binding UserName}"></TextBox>-->
+            <!--<TextBox Grid.Row="4"></TextBox>-->
+            <TextBox Grid.Row="4" Text="{Binding UserName, Mode=TwoWay}"></TextBox>
             <TextBlock Text="mot de passe" Grid.Row="5" TextAlignment="Center" Margin="10"></TextBlock>
-            <PasswordBox Grid.Row="6"></PasswordBox>
-            <!--<PasswordBox Grid.Row="6" Password="{Binding Password}" ></PasswordBox>-->
+            <!--<PasswordBox Grid.Row="6"></PasswordBox>-->
+            <PasswordBox Grid.Row="6" Password="{Binding Password, Mode=TwoWay}" ></PasswordBox>
             <Button x:Name="Connexion"  Command="{Binding ConnexionAppCommand}" HorizontalAlignment="Center" Grid.Row="7" Padding="10" Background="#FF750023">Connection</Button>
 
         </Grid>

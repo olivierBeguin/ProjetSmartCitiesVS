@@ -95,8 +95,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\ServicesAccessApi.cs" />
-    <Compile Include="Model\UserConnectionAccessApi.cs" />
+    <Compile Include="DataAccess\ServicesDataAccess.cs" />
+    <Compile Include="DataAccess\UserConnectionDataAccess.cs" />
+    <Compile Include="Exceptions\ConnectionException.cs" />
+    <Compile Include="Exceptions\DataNotAvailableException.cs" />
+    <Compile Include="Exceptions\DataUpdateException.cs" />
     <Compile Include="Model\AllCategory.cs" />
     <Compile Include="Model\AllService.cs" />
     <Compile Include="Model\CategoryService.cs" />
@@ -157,9 +160,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converter\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

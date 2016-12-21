@@ -1,4 +1,5 @@
 ﻿using g_aideUWP.DAO;
+using g_aideUWP.Exceptions;
 using g_aideUWP.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -8,21 +9,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.Xaml.Navigation;
 
 namespace g_aideUWP.ViewModel
 {
     public class ListServiceModel : ViewModelBase, INotifyPropertyChanged
     {
         private ObservableCollection<Service> _services = null;
-        private ObservableCollection<CategoryService> _category = null;
-        private INavigationService _navigationService;
-        private Service _selectedService;
-        private ICommand _listService;
-        private ICommand _EditCommand;
-
-        IEnumerable<Service> allServices;
-        private UserConnection uc = new UserConnection();// a voir si c est ici comme ca faut garder le token en memoire et le demander qu une seule fois
-        private ServicesDAO services = new ServicesDAO();
 
         public ObservableCollection<Service> Services
         {
@@ -38,6 +31,8 @@ namespace g_aideUWP.ViewModel
             }
         }
 
+
+        private ObservableCollection<CategoryService> _category = null;
         public ObservableCollection<CategoryService> ListCategory
         {
             get { return _category; }
@@ -53,10 +48,13 @@ namespace g_aideUWP.ViewModel
         }
 
 
+        //private IDialogService dialogService; // a retirer aussi du viewmodellocator si je supprime
 
-        public ListServiceModel(INavigationService navigationService)
+        private INavigationService _navigationService;
+        public ListServiceModel(INavigationService navigationService, IDialogService dialogService)
         {
             _navigationService = navigationService;
+            //this.dialogService = dialogService;
 
             if (IsInDesignMode)
             {
@@ -69,7 +67,6 @@ namespace g_aideUWP.ViewModel
                 }
                 allCategory.AllCategoryService = category;
                 ListCategory = new ObservableCollection<CategoryService>(category);
-
 
                 var allServices = new AllService();
                 var services = new List<Service>();
@@ -88,15 +85,27 @@ namespace g_aideUWP.ViewModel
 
         }
 
+
+        private UserConnection uc = new UserConnection();// a voir si c est ici comme ca faut garder le token en memoire et le demander qu une seule fois
+        private ServicesDAO services = new ServicesDAO();
         public async Task InitializeAsync()
         {
-            string tokenAccess = await uc.GetToken();  // a mettre autre part et a retenir le token dans l app, vault ?
-            var category = await services.GetCategory(tokenAccess);
-            var allServices = await services.GetServices(tokenAccess);
-            ListCategory = new ObservableCollection<CategoryService>(category);
-            Services = new ObservableCollection<Service>(allServices);
+            try
+            {
+                string tokenAccess = await uc.GetToken2();  // a mettre autre part et a retenir le token dans l app, vault ? view model locator ? et remmetre gettoken()
+                var category = await services.GetCategory(tokenAccess);
+                var allServices = await services.GetServices(tokenAccess);
+                ListCategory = new ObservableCollection<CategoryService>(category);
+                Services = new ObservableCollection<Service>(allServices);
+            }
+            catch(DataNotAvailableException e) // a faire le catch !!
+            {
+                
+            }
         }
 
+
+        private Service _selectedService;
         public Service SelectedService
         {
             get { return _selectedService; }
@@ -110,7 +119,8 @@ namespace g_aideUWP.ViewModel
             }
         }
 
-        
+
+        private ICommand _EditCommand;
         public ICommand EditCommand
         {
             get
@@ -123,6 +133,7 @@ namespace g_aideUWP.ViewModel
             }
         }
 
+        private ICommand _listService;
         public ICommand RemoveCommand
         {
             get
@@ -152,9 +163,16 @@ namespace g_aideUWP.ViewModel
         {
             if (CanExecute())
             {
-                string tokenAccess = await uc.GetToken();  // a mettre autre part et a retenir le token dans l app, vault ?
-                services.RemoveService(SelectedService, tokenAccess);
-                _navigationService.NavigateTo("ListService");
+                try
+                {
+                    string tokenAccess = await uc.GetToken2();  // a mettre autre part et a retenir le token dans l app, vault ? et remttre gettoken
+                    services.RemoveService(SelectedService, tokenAccess);
+                    await InitializeAsync();
+                }
+                catch(DataUpdateException e)// catch a faire !!!
+                {
+
+                }
             }
         }
 

@@ -13,6 +13,7 @@ namespace g_aideUWP.ViewModel
             SimpleIoc.Default.Register<ConnectionPageModel>();
             SimpleIoc.Default.Register<ListServiceModel>();
             SimpleIoc.Default.Register<EditCategoryModel>();
+            SimpleIoc.Default.Register<IDialogService, DialogService>();
 
             NavigationService navigationPages = new NavigationService();
             SimpleIoc.Default.Register<INavigationService>(() => navigationPages);
