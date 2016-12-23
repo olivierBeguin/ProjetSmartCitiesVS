@@ -15,10 +15,11 @@ namespace g_aideUWP
         {
             this.InitializeComponent();
         }
-
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
         }
+
+
     }
 }

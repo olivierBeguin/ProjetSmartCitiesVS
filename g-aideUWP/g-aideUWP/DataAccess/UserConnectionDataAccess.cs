@@ -30,7 +30,7 @@ namespace g_aideUWP.DAO
                 string trueToken = data["access_token"].Value<string>();
                 return trueToken;
             }
-            catch (IOException)
+            catch (HttpRequestException)
             {
                 throw new ConnectionException(false);
             }
@@ -40,7 +40,7 @@ namespace g_aideUWP.DAO
             }
         }
 
-            public async Task<string> GetToken2()
+            public async Task<string> GetToken2() // a retirer apres avoir mit token dans vault
         {
             try
             {

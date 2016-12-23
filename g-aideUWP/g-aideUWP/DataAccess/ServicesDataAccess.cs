@@ -27,10 +27,13 @@ namespace g_aideUWP.DAO
 
                 var services = rawService["data"].Children().Select(d => new Service()
                 {
-                    Id = d["Id"].Value<long>(),
+                    Id = d["Id"].Value<long>(), 
                     NameService = d["Label"].Value<string>(),
                     DescriptionService = d["DescriptionService"].Value<string>(),
                     DatePublicationService = d["DatePublicationService"].Value<DateTime>(),
+                    ServiceDone = d["ServiceDone"].Value<bool>(),
+                   // DatePublicationService = new TimeSpan(int.Parse(t["openingHour"].Value<string>().Substring(0, 2)), int.Parse(t["openingHour"].Value<string>().Substring(3, 2)), int.Parse(t["openingHour"].Value<string>().Substring(6, 2))),
+                    UserNeedServiceEmail = d["UserNeedService"]["Email"].Value<string>(),
                     Category = new CategoryService()
                     {
                         Id = d["Category"]["Id"].Value<long>(),
@@ -39,6 +42,7 @@ namespace g_aideUWP.DAO
                 });
 
                 return services;
+                
             }
             catch (Exception)
             {
@@ -67,12 +71,21 @@ namespace g_aideUWP.DAO
         }
 
 
-        public async void EditService(Service serviceEdit, string tokenAccess)// fini , pas tester mais normalement OK il faut le mettre en place lorsqu on appuie sur le bouton
+        public async void EditService(Service serviceEdit, string tokenAccess)
         {
             try
             {
                 long id = serviceEdit.Id;
-                var json = JsonConvert.SerializeObject(serviceEdit);
+                ServiceBindingModel putService = new ServiceBindingModel()
+                {
+                    Label = serviceEdit.NameService,
+                    DescriptionService = serviceEdit.DescriptionService,
+                    DatePublicationService = serviceEdit.DatePublicationService,
+                    ServiceDone = serviceEdit.ServiceDone,
+                    UserNeedService = serviceEdit.UserNeedServiceEmail,
+                    Category = (int)serviceEdit.Category.Id
+                };
+                var json = JsonConvert.SerializeObject(putService);
 
                 var buffer = Encoding.UTF8.GetBytes(json);
                 var byteContent = new ByteArrayContent(buffer);
@@ -80,16 +93,17 @@ namespace g_aideUWP.DAO
 
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenAccess);
-                var result = await client.PutAsync(new Uri("http://g-aideappweb.azurewebsites.net/api/services/" + 1), byteContent);
+                var result = await client.PutAsync(new Uri("http://g-aideappweb.azurewebsites.net/api/services/" + id), byteContent);
 
                 result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
                 result.EnsureSuccessStatusCode();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw new DataUpdateException();
             }
+            
         }
 
         public async Task<IEnumerable<CategoryService>> GetCategory(string tokenAccess)

@@ -4,11 +4,13 @@ using g_aideUWP.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Security.Credentials;
 using Windows.UI.Xaml.Navigation;
 
 namespace g_aideUWP.ViewModel
@@ -16,6 +18,7 @@ namespace g_aideUWP.ViewModel
     public class ListServiceModel : ViewModelBase, INotifyPropertyChanged
     {
         private ObservableCollection<Service> _services = null;
+        private string tokenAccess;
 
         public ObservableCollection<Service> Services
         {
@@ -32,7 +35,7 @@ namespace g_aideUWP.ViewModel
         }
 
 
-        private ObservableCollection<CategoryService> _category = null;
+        private ObservableCollection<CategoryService> _category;
         public ObservableCollection<CategoryService> ListCategory
         {
             get { return _category; }
@@ -43,7 +46,7 @@ namespace g_aideUWP.ViewModel
                     return;
                 }
                 _category = value;
-                RaisePropertyChanged("Category");
+                RaisePropertyChanged("ListCategory");
             }
         }
 
@@ -51,54 +54,37 @@ namespace g_aideUWP.ViewModel
         private IDialogService dialogService;
 
         private INavigationService _navigationService;
+        ObservableCollection<Service> observableCollectionAllServices = new ObservableCollection<Service>();
         public ListServiceModel(INavigationService navigationService, IDialogService dialogService)
         {
             InitializeAsync();
             this.dialogService = dialogService;
             _navigationService = navigationService;
-            
-
-            //if (IsInDesignMode)
-            //{
-            //    var allCategory = new AllCategory();
-            //    var category = new List<CategoryService>();
-
-            //    foreach(CategoryService categoryService in category)
-            //    {
-            //        category.Add(new CategoryService());
-            //    }
-            //    allCategory.AllCategoryService = category;
-            //    ListCategory = new ObservableCollection<CategoryService>(category);
-
-            //    var allServices = new AllService();
-            //    var services = new List<Service>();
-
-            //    foreach (Service service in services)
-            //    {
-            //        services.Add(new Service());
-            //    }
-            //    allServices.AllServices = services;
-            //    Services = new ObservableCollection<Service>(services);
-            //}
-            //else
-            //{
-                
-            //}
-
         }
 
-
-        private UserConnection uc = new UserConnection();// a voir si c est ici comme ca faut garder le token en memoire et le demander qu une seule fois
         private ServicesDAO services = new ServicesDAO();
         public async Task InitializeAsync()
         {
             try
             {
-                string tokenAccess = await uc.GetToken2();  // a mettre autre part et a retenir le token dans l app, vault ? view model locator ? et remmetre gettoken()
-                var category = await services.GetCategory(tokenAccess);
+                tokenAccess = GetTokenVault();
+                var allCategory = await services.GetCategory(tokenAccess);
                 var allServices = await services.GetServices(tokenAccess);
-                ListCategory = new ObservableCollection<CategoryService>(category);
+                
+                ListCategory = new ObservableCollection<CategoryService>(allCategory);
+
+                //ListCategoryName = new ObservableCollection<string>();
+                //ListCategoryName.Add("Sélectionnez une catégorie");
+
+                //foreach(CategoryService categoryService in ListCategory)
+                //{
+                //    ListCategoryName.Add(categoryService.Label);
+                //}
+
+                //observableCollectionAllServices =(ObservableCollection<Service>)(allServices);
                 Services = new ObservableCollection<Service>(allServices);
+
+                //RefreshServices();
             }
             catch(DataNotAvailableException e)
             {
@@ -111,6 +97,24 @@ namespace g_aideUWP.ViewModel
                         });
             }
         }
+
+        //private void RefreshServices()
+        //{
+        //    Services = triServiceCat(observableCollectionAllServices, SelectedCategory.Label);
+        //}
+
+        //private ObservableCollection<Service> triServiceCat(ObservableCollection<Service> services, string categoryNameService)
+        //{
+        //    ObservableCollection<Service> servicesCat = new ObservableCollection<Service>();
+        //    foreach(Service service in services)
+        //    {
+        //        if(service.Category.Label.Equals(categoryNameService) || categoryNameService.Equals("Sélectionnez une catégorie"))
+        //        {
+        //            servicesCat.Add(service);
+        //        }
+        //    }
+        //    return servicesCat;
+        //}
 
 
         private Service _selectedService;
@@ -127,6 +131,34 @@ namespace g_aideUWP.ViewModel
             }
         }
 
+        
+        private CategoryService _selectedCategory;
+        public CategoryService SelectedCategory
+        {
+            get { return _selectedCategory; }
+            set
+            {
+                    _selectedCategory = value;
+
+                    if (_selectedCategory != null)
+                    {
+                        RaisePropertyChanged("SelectedCategory");
+                    }
+            }
+        }
+
+        //private ICommand _RefreshCommand;
+        //public ICommand RefreshCommand
+        //{
+        //    get
+        //    {
+        //        if(this._RefreshCommand == null)
+        //        {
+        //            _RefreshCommand = new RelayCommand(() => RefreshService());
+        //        }
+        //        return this._RefreshCommand;
+        //    }
+        //}
 
         private ICommand _EditCommand;
         public ICommand EditCommand
@@ -154,6 +186,14 @@ namespace g_aideUWP.ViewModel
             }
         }
 
+        //private async void RefreshService()
+        //{
+        //    if (CanExecute())
+        //    {
+        //        RefreshServices();
+        //    }
+        //}
+
         private void EditService()
         {
             if (CanExecute())
@@ -173,7 +213,7 @@ namespace g_aideUWP.ViewModel
             {
                 try
                 {
-                    string tokenAccess = await uc.GetToken2();  // a mettre autre part et a retenir le token dans l app, vault ? et remttre gettoken
+                    tokenAccess = GetTokenVault();
                     services.RemoveService(SelectedService, tokenAccess);
                     await InitializeAsync();
                     
@@ -198,6 +238,32 @@ namespace g_aideUWP.ViewModel
 
                             });
                 }
+            }
+        }
+
+        public string GetTokenVault()
+        {
+            try
+            {
+                Windows.Security.Credentials.PasswordCredential credential = null;
+
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var storedCredential = vault.FindAllByResource("G-Aide");
+                if (storedCredential.Count > 0)
+                {
+                    credential = vault.Retrieve("G-Aide", "MKTIG");
+                }
+
+                if (credential != null)
+                {
+                    return credential.Password;
+                }
+
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
 

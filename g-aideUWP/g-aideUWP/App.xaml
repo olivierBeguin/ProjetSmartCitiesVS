@@ -13,9 +13,11 @@
                 <StackPanel Margin="15,0,0,0" Width="Auto">
                     <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding NameService}" VerticalAlignment="Top" FontSize="23" FontWeight="Bold"></TextBlock>
                     <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding DescriptionService}" VerticalAlignment="Top"></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Catégorie :" VerticalAlignment="Top" FontWeight="SemiBold"></TextBlock>
+                    <TextBlock HorizontalAlignment="right" TextWrapping="Wrap" Text="{Binding Category.Label}" VerticalAlignment="Top"></TextBlock>
                 </StackPanel>
             </Grid>
         </DataTemplate>
-
+        
     </Application.Resources>
 </Application>

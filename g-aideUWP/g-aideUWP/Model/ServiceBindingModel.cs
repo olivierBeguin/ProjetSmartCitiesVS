@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace g_aideUWP.Model
 {
-    public class Service
+    class ServiceBindingModel
     {
-        public long Id { get; set; }
-        public string NameService { get; set; }
+        public string Label { get; set; }
         public string DescriptionService { get; set; }
-        public bool ServiceDone { get; set; }
-        public string UserNeedServiceEmail { get; set; }
         public DateTime DatePublicationService { get; set; }
-        public CategoryService Category { get; set; }
-
+        public bool ServiceDone { get; set; }
+        public string UserNeedService { get; set; }
+        public int Category { get; set; }
     }
 }

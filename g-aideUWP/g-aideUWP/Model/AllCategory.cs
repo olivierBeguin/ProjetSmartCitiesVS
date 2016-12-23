@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace g_aideUWP.Model
 {
-    class AllCategory
+    class AllCategory : CategoryService
     {
         public IEnumerable<CategoryService> AllCategoryService { get; set; }
     }

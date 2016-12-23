@@ -104,6 +104,7 @@
     <Compile Include="Model\AllService.cs" />
     <Compile Include="Model\CategoryService.cs" />
     <Compile Include="Model\Service.cs" />
+    <Compile Include="Model\ServiceBindingModel.cs" />
     <Compile Include="ViewModel\ConnectionPageModel.cs" />
     <Compile Include="ViewModel\EditCategoryModel.cs" />
     <Compile Include="ViewModel\ListServiceModel.cs" />

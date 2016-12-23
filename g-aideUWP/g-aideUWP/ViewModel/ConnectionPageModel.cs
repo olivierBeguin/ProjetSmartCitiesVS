@@ -1,5 +1,4 @@
-﻿// mettre que il n y a que l admin qui a acces a l uwp
-using g_aideUWP.DAO;
+﻿using g_aideUWP.DAO;
 using g_aideUWP.Exceptions;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -14,7 +13,7 @@ namespace g_aideUWP.ViewModel
     {
         private INavigationService _navigationService;
         
-        private UserConnection uc = new UserConnection();// a voir si c est ici comme ca faut garder le token en memoire et le demander qu une seule fois 
+        private UserConnection uc = new UserConnection();
         private IDialogService dialogService;    
 
         public ConnectionPageModel(INavigationService navigationService, IDialogService dialogService)
@@ -40,11 +39,26 @@ namespace g_aideUWP.ViewModel
         {
             try
             {
-                string tokenAccess = await uc.GetToken2();  // a mettre autre part et a retenir le token dans l app, vault ?
-                //if (string.Equals(UserName,"admin")) // a mettre si on veut qu'il n'y ai que l'admin qui ait acces a cette application. et +1 exception du coup.
-                //{
-                    _navigationService.NavigateTo("ListService");
-                //}
+                string tokenAccess = await uc.GetToken(UserName,Password);
+
+                if (string.Equals(UserName,"admin") || string.Equals(UserName,"louvdd@hotmail.com"))
+                {
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                vault.Add(new Windows.Security.Credentials.PasswordCredential(
+                    "G-Aide", "MKTIG" , tokenAccess));
+                
+                _navigationService.NavigateTo("ListService");
+                }
+                else
+                {
+                    await dialogService.ShowMessage("Ce compte n'est pas un compte administrateur. Seul l'administrateur a acces à cette application.",
+                        "Erreur",
+                        buttonConfirmText: "OK", buttonCancelText: "Annuler",
+                        afterHideCallback: (confirmed) =>
+                        {
+
+                        });
+                }
             }
             catch(ConnectionException e)
             {

@@ -10,5 +10,11 @@ namespace g_aideUWP.Model
     {
         public long Id { get; set; }
         public string Label { get; set; }
+
+        
+        public override string ToString()
+        {
+            return Label;
+        }
     }
 }
