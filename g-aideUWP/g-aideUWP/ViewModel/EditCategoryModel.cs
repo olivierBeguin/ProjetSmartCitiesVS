@@ -44,6 +44,7 @@ namespace g_aideUWP.ViewModel
             _navigationService = navigationService;
             InitializeAsync();
         }
+            
 
         public async Task InitializeAsync()
         {
@@ -68,6 +69,7 @@ namespace g_aideUWP.ViewModel
         public void OnNavigatedTo(NavigationEventArgs e)
         {
             SelectedService = (Service)e.Parameter;
+            SelectedCategory = SelectedService.Category;   
         }
 
         private CategoryService _selectedCategory;

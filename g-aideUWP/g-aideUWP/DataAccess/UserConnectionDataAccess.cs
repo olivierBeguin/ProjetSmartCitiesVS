@@ -39,32 +39,5 @@ namespace g_aideUWP.DAO
                 throw new ConnectionException(true);
             }
         }
-
-            public async Task<string> GetToken2() // a retirer apres avoir mit token dans vault
-        {
-            try
-            {
-                string values = ("Username=admin&Password=admin12&grant_type=password");
-
-                StringContent content = new StringContent(values);
-                var getToken = new HttpClient();
-                var token = await getToken.PostAsync(new Uri("http://g-aideappweb.azurewebsites.net/Token"), content);
-
-                token.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-                string responseBody = await token.Content.ReadAsStringAsync();
-                var data = JObject.Parse(responseBody);
-                string trueToken = data["access_token"].Value<string>();
-                return trueToken;
-            }
-            catch (HttpRequestException)
-            {
-                throw new ConnectionException(false);
-            }
-            catch (Exception)
-            {
-                throw new ConnectionException(true);
-            }
-        }
-    }   
+    }
 }

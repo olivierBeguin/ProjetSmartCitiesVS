@@ -74,18 +74,10 @@ namespace g_aideUWP.ViewModel
 
 
         private string _userName;
-        public string UserName // apres tout les test enlever la fonction que les champ sont pré remplis ( idem pour password)
+        public string UserName
         {
             get
             {
-                var appData = Windows.Storage.ApplicationData.Current;
-                var roamingSettings = appData.RoamingSettings;
-
-                if (roamingSettings.Values.ContainsKey("UserName"))
-                {
-                    _userName = roamingSettings.Values["UserName"].ToString();
-                }
-
                 return _userName;
             }
 
@@ -94,10 +86,6 @@ namespace g_aideUWP.ViewModel
                 _userName = value;
                 if (_userName != null)
                 {
-                    var appData = Windows.Storage.ApplicationData.Current;
-                    var roamingSettings = appData.RoamingSettings;
-                    roamingSettings.Values["UserName"] = _userName;
-
                     RaisePropertyChanged("UserName");
                 }
             }
@@ -109,14 +97,6 @@ namespace g_aideUWP.ViewModel
         {
             get
             {
-                var appData = Windows.Storage.ApplicationData.Current;
-                var roamingSettings = appData.RoamingSettings;
-
-                if (roamingSettings.Values.ContainsKey("Password"))
-                {
-                    _password = roamingSettings.Values["Password"].ToString();
-                }
-
                 return _password;
             }
 
@@ -125,10 +105,6 @@ namespace g_aideUWP.ViewModel
                 _password = value;
                 if (_password != null)
                 {
-                    var appData = Windows.Storage.ApplicationData.Current;
-                    var roamingSettings = appData.RoamingSettings;
-                    roamingSettings.Values["Password"] = _password;
-
                     RaisePropertyChanged("Password");
                 }
             }

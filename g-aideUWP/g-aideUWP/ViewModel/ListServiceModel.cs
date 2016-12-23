@@ -73,18 +73,7 @@ namespace g_aideUWP.ViewModel
                 
                 ListCategory = new ObservableCollection<CategoryService>(allCategory);
 
-                //ListCategoryName = new ObservableCollection<string>();
-                //ListCategoryName.Add("Sélectionnez une catégorie");
-
-                //foreach(CategoryService categoryService in ListCategory)
-                //{
-                //    ListCategoryName.Add(categoryService.Label);
-                //}
-
-                //observableCollectionAllServices =(ObservableCollection<Service>)(allServices);
                 Services = new ObservableCollection<Service>(allServices);
-
-                //RefreshServices();
             }
             catch(DataNotAvailableException e)
             {
@@ -97,24 +86,6 @@ namespace g_aideUWP.ViewModel
                         });
             }
         }
-
-        //private void RefreshServices()
-        //{
-        //    Services = triServiceCat(observableCollectionAllServices, SelectedCategory.Label);
-        //}
-
-        //private ObservableCollection<Service> triServiceCat(ObservableCollection<Service> services, string categoryNameService)
-        //{
-        //    ObservableCollection<Service> servicesCat = new ObservableCollection<Service>();
-        //    foreach(Service service in services)
-        //    {
-        //        if(service.Category.Label.Equals(categoryNameService) || categoryNameService.Equals("Sélectionnez une catégorie"))
-        //        {
-        //            servicesCat.Add(service);
-        //        }
-        //    }
-        //    return servicesCat;
-        //}
 
 
         private Service _selectedService;
@@ -147,19 +118,6 @@ namespace g_aideUWP.ViewModel
             }
         }
 
-        //private ICommand _RefreshCommand;
-        //public ICommand RefreshCommand
-        //{
-        //    get
-        //    {
-        //        if(this._RefreshCommand == null)
-        //        {
-        //            _RefreshCommand = new RelayCommand(() => RefreshService());
-        //        }
-        //        return this._RefreshCommand;
-        //    }
-        //}
-
         private ICommand _EditCommand;
         public ICommand EditCommand
         {
@@ -186,13 +144,6 @@ namespace g_aideUWP.ViewModel
             }
         }
 
-        //private async void RefreshService()
-        //{
-        //    if (CanExecute())
-        //    {
-        //        RefreshServices();
-        //    }
-        //}
 
         private void EditService()
         {

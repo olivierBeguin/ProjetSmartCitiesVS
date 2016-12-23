@@ -15,11 +15,6 @@
                 <RowDefinition Height="50"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <!--<Grid>
-                <ComboBox Name="CategoryComboBox" ItemsSource="{Binding ListCategory, Mode=TwoWay}" SelectedItem="{Binding SelectedCategory}" Height="35" Grid.Row="0" HorizontalAlignment="Left" Width="225" Margin="10,10,125,0"/>
-                --><!--<Button x:Name="RefreshCategory" Command="{Binding RefreshCommand}" Content="Rafraichir" HorizontalAlignment="Left"  VerticalAlignment="Center" Background="#FF750023" Width="89" Margin="261,10,0,8" />--><!--
-            Grid></-->
-
             <ListView Grid.Row="0" Margin="10" ItemsSource="{Binding Services, Mode=TwoWay}" ItemTemplate="{StaticResource ServiceTemplate}" SelectedItem="{Binding SelectedService, Mode=TwoWay}">
             </ListView>
 

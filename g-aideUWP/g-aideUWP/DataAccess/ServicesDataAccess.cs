@@ -32,7 +32,6 @@ namespace g_aideUWP.DAO
                     DescriptionService = d["DescriptionService"].Value<string>(),
                     DatePublicationService = d["DatePublicationService"].Value<DateTime>(),
                     ServiceDone = d["ServiceDone"].Value<bool>(),
-                   // DatePublicationService = new TimeSpan(int.Parse(t["openingHour"].Value<string>().Substring(0, 2)), int.Parse(t["openingHour"].Value<string>().Substring(3, 2)), int.Parse(t["openingHour"].Value<string>().Substring(6, 2))),
                     UserNeedServiceEmail = d["UserNeedService"]["Email"].Value<string>(),
                     Category = new CategoryService()
                     {
